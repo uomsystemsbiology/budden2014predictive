@@ -152,14 +152,12 @@ scatter.plot.chipseq.svr <- ggplot(chipseq.svr.data, aes(chipseq.svr.data$measur
 
 ## arrange plots --------------------------------
 
+pdf(file=sprintf('%sfigure2.pdf', output.path))
+
 fig2 <- arrangeGrob(scatter.plot.pwm.loglinear, scatter.plot.pwm.histone.loglinear, scatter.plot.chipseq.loglinear, scatter.plot.pwm.svr, scatter.plot.pwm.histone.svr, scatter.plot.chipseq.svr, ncol=3, nrow=2)
 grid.draw(fig2)
 
-## removing class check from ggsave as a workaround.  This will break at some point in the future
-ggsave <- ggplot2::ggsave; body(ggsave) <- body(ggplot2::ggsave)[-2]
-
-## NOTE: export at 6.6 by 10" (convert to 84mm)
-ggsave(fig2, file=sprintf('%sfigure2.pdf', output.path), height=6.6, width=14)
+dev.off()
 
 ## COMPLETE ========================================================
 

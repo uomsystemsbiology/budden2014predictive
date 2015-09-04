@@ -121,16 +121,12 @@ scatter.plot.all.svr <- ggplot(all.svr.data, aes(all.svr.data$measured, all.svr.
   annotate('text', x=7, y=-7, label=all.svr.label, parse=TRUE, size=6)
 
 ## arrange plots --------------------------------
+pdf(file=sprintf('%sfigure3.pdf', output.path))
 
 fig3 <- arrangeGrob(scatter.plot.tfas.linear, scatter.plot.histone.linear, scatter.plot.all.linear, scatter.plot.tfas.svr, scatter.plot.histone.svr, scatter.plot.all.svr, ncol=3, nrow=2)
 grid.draw(fig3)
 
-## removing class check from ggsave as a workaround.  This will break at some point in the future
-ggsave <- ggplot2::ggsave; body(ggsave) <- body(ggplot2::ggsave)[-2]
-
-## NOTE: export at 6.6 by 10" (convert to 84mm)
-ggsave(fig3, file=sprintf('%sfigure3.pdf', output.path), height=6.6, width=14)
-
+dev.off()
 ## COMPLETE ========================================================
 
 print(sprintf('Complete'))
