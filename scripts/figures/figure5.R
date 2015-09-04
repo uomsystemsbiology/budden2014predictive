@@ -11,6 +11,7 @@
 
 require(ggplot2)
 require(gridExtra)
+require(grid)
 
 ## path to data files
 data.path <- '../../output/results3/mouse/'
@@ -41,6 +42,9 @@ fig5 <- ggplot(weighted.loading, aes(weighted.loading$X, weighted.loading[,which
   theme(axis.text.x=element_text(angle=90, size=16, vjust=0.5, hjust=1), axis.title.x=element_blank()) +
   theme(axis.text.y=element_text(size=14), axis.title.y=element_text(size=20))
 plot(fig5)
+
+## removing class check from ggsave as a workaround.  This will break at some point in the future
+ggsave <- ggplot2::ggsave; body(ggsave) <- body(ggplot2::ggsave)[-2]
 
 ## NOTE: export at 6.6 by 10" (convert to 84mm)
 ggsave(fig5, file=sprintf('%sfigure5.pdf', output.path), height=6.6, width=14)

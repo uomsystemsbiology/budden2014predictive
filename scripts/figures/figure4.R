@@ -11,6 +11,7 @@
 
 require(ggplot2)
 require(gridExtra)
+require(grid)
 
 ## path to data files
 data.path <- '../../output/results2/gm12878/'
@@ -127,6 +128,10 @@ scatter.plot.all.svr <- ggplot(all.svr.data, aes(all.svr.data$measured, all.svr.
 #grid.arrange(scatter.plot.linear, scatter.plot.svr, ncol=2, nrow=1)
 fig4 <- arrangeGrob(scatter.plot.tfas.linear, scatter.plot.histone.linear, scatter.plot.all.linear, scatter.plot.tfas.svr, scatter.plot.histone.svr, scatter.plot.all.svr, ncol=3, nrow=2)
 grid.draw(fig4)
+
+## removing class check from ggsave as a workaround.  This will break at some point in the future
+ggsave <- ggplot2::ggsave; body(ggsave) <- body(ggplot2::ggsave)[-2]
+
 ## NOTE: export at 6.6 by 10" (convert to 84mm)
 ggsave(fig4, file=sprintf('%sfigure4.pdf', output.path), height=6.6, width=14)
 
